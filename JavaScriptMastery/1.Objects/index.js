@@ -124,3 +124,75 @@ console.log("After the call multiply by 2 : ", menu);
 //   title: "My menu"
 // };
 // Please note that multiplyNumeric does not need to return anything. It should modify the object in-place.
+
+// Objects References and Copying
+
+let obj1 = {
+  name: "test",
+};
+
+let obj2 = obj1;
+console.log(" before updated the value of obj1 from its reference :", obj1);
+obj2.name = "updated from obj2";
+console.log(" logging the obj1 to console :", obj1);
+// objects are passed as a refernce not by the value (i.e in case of primitives)
+// Two objects are equal , if they reference to the same object
+
+const obj3 = {
+  name: "test",
+};
+
+// even though the obj3 is a constant ,we can modifiy it property but cannot change the reference it is mapped to.
+
+// Cloning ,Merging and object.assign
+
+// copying a one more variable creates a one more references, in some case we need to create a new independent copy of the object ,which is cloning
+
+let personClone = {}; //empty personclone object
+
+for (const key in person) {
+  personClone[key] = person[key];
+}
+
+console.log("cloned person object ", personClone);
+
+// here person and personCloned objects are independent to each other ,manuplating one object wont effect the other one
+
+// Object.assign() inbuilt method canbe used to clone objects
+
+let personclone2 = Object.assign({}, personClone, { isEmployed: false });
+console.log(personclone2);
+
+//Nested cloning
+// if the properties of object have values of object ,the cloning should be deep cloning where every property should be checked ,if its a object the property should be cloned
+
+// There is in-built method structuredClone() to clone objects deeply
+
+let shape = {
+  name: " Rectangle",
+  dimensions: {
+    "width ": 10,
+    breadth: 11,
+  },
+}; // object have object property values
+
+let shapeClone = Object.assign({}, shape);
+if (shapeClone.dimensions === shape.dimensions)
+  console.log(" both the objects are equal");
+// output :  both the objects are equal
+// even though the object are cloned but the output is showing that both the objects are same
+// that means the object is not cloned deeply
+
+// To clone deeply, manuplating the cloned obj wont effect the original one
+let shapeClone2 = structuredClone(shape);
+if (shapeClone2.dimensions === shape.dimensions)
+  console.log(" both the objects are same");
+else console.log(" Both objs are not same");
+
+let circularRef = {
+  prop: {
+    prop: circularRef,
+  },
+};
+
+console.log(circularRef);
