@@ -189,10 +189,68 @@ if (shapeClone2.dimensions === shape.dimensions)
   console.log(" both the objects are same");
 else console.log(" Both objs are not same");
 
-let circularRef = {
-  prop: {
-    prop: circularRef,
+// Garbage Collection
+
+// Memory management in JavaScript is performed automatically and invisibly to us. We create primitives, objects, functions… All that takes memory.
+
+// What happens when something is not needed any more? How does the JavaScript engine discover it and clean it up?
+
+// object Methods ,this keyword
+
+// Create an object calculator with three methods:
+
+// read() prompts for two values and saves them as object properties with names a and b respectively.
+// sum() returns the sum of saved values.
+// mul() multiplies saved values and returns the result.
+let calculator = {
+  // ... your code ...
+
+  read(a, b) {
+    this.obj = {
+      a: a,
+      b: b,
+    };
+  },
+  sum() {
+    return this.obj.a + this.obj.b;
+  },
+  mul() {
+    return this.obj.a * this.obj.b;
   },
 };
 
-console.log(circularRef);
+calculator.read(1, 2);
+console.log(calculator.sum());
+console.log(calculator.mul());
+
+// Chaining
+// There’s a ladder object that allows you to go up and down:
+
+let ladder = {
+  step: 0,
+  up() {
+    this.step++;
+    return this;
+  },
+  down() {
+    this.step--;
+    return this;
+  },
+  showStep: function () {
+    // shows the current step
+    console.log(this.step);
+    return this;
+  },
+};
+// Now, if we need to make several calls in sequence, we can do it like this:
+
+// ladder.up();
+// ladder.up();
+// ladder.down();
+// ladder.showStep(); // 1
+// ladder.down();
+// ladder.showStep(); // 0
+// Modify the code of up, down, and showStep to make the calls chainable, like this:
+
+ladder.up().up().down().showStep().down().showStep(); // shows 1 then 0
+// Such an approach is widely used across JavaScript libraries.
